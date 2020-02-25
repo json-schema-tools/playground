@@ -11,13 +11,14 @@ import SplitPane from "react-split-pane";
 import JsonSchemaToTypes, { SupportedLanguages } from "@etclabscore/json-schema-to-types";
 import "./MyApp.css";
 import Editor from "@etclabscore/react-monaco-editor";
+import { addDiagnostics } from "@etclabscore/monaco-add-json-schema-diagnostics";
 
 const languages: SupportedLanguages[] = ["typescript", "golang", "python", "rust"];
 
 const MyApp: React.FC = () => {
   const darkMode = useDarkMode();
   const [, setIsEditorReady] = useState(false);
-  const [defaultValue] = useState(`{\n  "title": "foo",\n  "type": "string" \n}`)
+  const [defaultValue] = useState(`{\n  "title": "foo",\n  "type": "string" \n}`);
   const [value, setValue] = useState(defaultValue);
   const [results, setResults] = useState("");
   const [languageAnchorEl, setLanguageAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -52,8 +53,18 @@ const MyApp: React.FC = () => {
     setLanguageAnchorEl(null);
   };
 
-  const handleEditorDidMount = (editor: any) => {
+  const handleEditorDidMount = async (_: any, editor: any) => {
     setIsEditorReady(true);
+    const modelUriString = "inmemory://json-schema-tools-playground.json";
+    const modelUri = monaco.Uri.parse(modelUriString);
+    const model = monaco.editor.createModel(value || "", "json", modelUri);
+    editor.setModel(model);
+    const schema = await fetch("https://json-schema.org/draft-07/schema").then((data) => data.json());
+    addDiagnostics(modelUri.toString(), schema, monaco);
+  };
+
+  const handleReadOnlyEditorDidMount = (editor: any) => {
+    // noop
   };
 
   useEffect(() => {
@@ -115,7 +126,7 @@ const MyApp: React.FC = () => {
         />
         <Editor
           height="90vh"
-          editorDidMount={handleEditorDidMount}
+          editorDidMount={handleReadOnlyEditorDidMount}
           options={{
             minimap: {
               enabled: false,
