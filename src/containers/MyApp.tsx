@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { MuiThemeProvider, AppBar, Toolbar, Typography, IconButton, Tooltip, CssBaseline, Grid, Menu, Button, MenuItem } from "@material-ui/core"; //tslint:disable-line
 import useDarkMode from "use-dark-mode";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import * as monaco from "monaco-editor";
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import { lightTheme, darkTheme } from "../themes/theme";
 import { useTranslation } from "react-i18next";
@@ -21,6 +22,11 @@ const MyApp: React.FC = () => {
   const [results, setResults] = useState("");
   const [languageAnchorEl, setLanguageAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedLanguage, setSelectedLanguage]: [SupportedLanguages, any] = useState("typescript");
+
+  useEffect(() => {
+    const th = darkMode.value ? "vs-dark" : "vs";
+    monaco.editor.setTheme(th);
+  }, [darkMode.value]);
 
   function handleTranspile() {
     try {

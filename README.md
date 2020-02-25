@@ -3,7 +3,7 @@
 A place to play around with json-schema.tools
 
 
-i![image](https://user-images.githubusercontent.com/364566/75206522-7b2d5480-572b-11ea-983c-737680cbd2a6.png)
+![json-schema-playground](https://user-images.githubusercontent.com/364566/75207677-45d63600-572e-11ea-8257-09c1fe4f7534.gif)
 
 
 ### Contributing
