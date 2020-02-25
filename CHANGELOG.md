@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/json-schema-tools/playground/compare/1.0.1...1.0.2) (2020-02-25)
+
+
+### Bug Fixes
+
+* add json schema 7 metaschema editor support ([6e69ea7](https://github.com/json-schema-tools/playground/commit/6e69ea798a96c53b305d7601fbe7a3ec2d738ff0))
+
 ## [1.0.1](https://github.com/json-schema-tools/playground/compare/1.0.0...1.0.1) (2020-02-25)
 
 
