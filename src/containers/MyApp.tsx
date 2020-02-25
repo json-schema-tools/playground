@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { MuiThemeProvider, AppBar, Toolbar, Typography, IconButton, Tooltip, CssBaseline, Grid, Menu, Button, MenuItem } from "@material-ui/core"; //tslint:disable-line
 import useDarkMode from "use-dark-mode";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
@@ -6,30 +6,26 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import { lightTheme, darkTheme } from "../themes/theme";
 import { useTranslation } from "react-i18next";
-import LanguageMenu from "./LanguageMenu";
 import SplitPane from "react-split-pane";
 import JsonSchemaToTypes, { SupportedLanguages } from "@etclabscore/json-schema-to-types";
 import "./MyApp.css";
-import PlayCircle from "@material-ui/icons/PlayCircleFilled";
 import Editor from "@etclabscore/react-monaco-editor";
 
 const languages: SupportedLanguages[] = ["typescript", "golang", "python", "rust"];
 
 const MyApp: React.FC = () => {
   const darkMode = useDarkMode();
-  const [isEditorReady, setIsEditorReady] = useState(false);
+  const [, setIsEditorReady] = useState(false);
   const [defaultValue] = useState(`{\n  "title": "foo",\n  "type": "string" \n}`)
   const [value, setValue] = useState(defaultValue);
   const [results, setResults] = useState("");
   const [languageAnchorEl, setLanguageAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedLanguage, setSelectedLanguage]: [SupportedLanguages, any] = useState("typescript");
-  const [transpiler, setTranspiler]: [JsonSchemaToTypes | undefined, any] = useState();
 
   function handleTranspile() {
     try {
       const result = JSON.parse(value);
       const tr = new JsonSchemaToTypes(result);
-      setTranspiler(tr);
       setResults(tr.to(selectedLanguage));
     } catch (e) {
       console.error(e);
@@ -56,6 +52,7 @@ const MyApp: React.FC = () => {
 
   useEffect(() => {
     handleTranspile();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, selectedLanguage]);
 
   return (
@@ -73,7 +70,9 @@ const MyApp: React.FC = () => {
               <Tooltip title={"Language"}>
                 <>
                   <Typography variant="body1" style={{ paddingRight: "10px" }}>Language:</Typography>
-                  <Button onClick={handleLanguageClick} variant="outlined" endIcon={<ArrowDropDownIcon />}>{selectedLanguage}</Button>
+                  <Button onClick={handleLanguageClick} variant="outlined" endIcon={
+                    <ArrowDropDownIcon />
+                  }>{selectedLanguage}</Button>
                 </>
               </Tooltip>
               <Menu
