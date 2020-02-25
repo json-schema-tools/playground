@@ -3,6 +3,7 @@ import { MuiThemeProvider, AppBar, Toolbar, Typography, IconButton, Tooltip, Css
 import useDarkMode from "use-dark-mode";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import CodeIcon from "@material-ui/icons/Code";
 import * as monaco from "monaco-editor";
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import { lightTheme, darkTheme } from "../themes/theme";
@@ -69,7 +70,7 @@ const MyApp: React.FC = () => {
 
   useEffect(() => {
     handleTranspile();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, selectedLanguage]);
 
   return (
@@ -84,12 +85,14 @@ const MyApp: React.FC = () => {
           </Grid>
           <Grid container alignContent="center" alignItems="center" justify="flex-end">
             {<>
-              <Tooltip title={"Language"}>
+              <Tooltip title={"Language"} >
                 <>
                   <Typography variant="body1" style={{ paddingRight: "10px" }}>Language:</Typography>
-                  <Button onClick={handleLanguageClick} variant="outlined" endIcon={
-                    <ArrowDropDownIcon />
-                  }>{selectedLanguage}</Button>
+                  <Button
+                    style={{ marginRight: "10px" }}
+                    onClick={handleLanguageClick} variant="outlined" endIcon={
+                      <ArrowDropDownIcon />
+                    }>{selectedLanguage}</Button>
                 </>
               </Tooltip>
               <Menu
@@ -105,6 +108,14 @@ const MyApp: React.FC = () => {
               </Menu>
             </>
             }
+            <Tooltip title={t("json-schema.tools Github")}>
+              <IconButton
+                onClick={() =>
+                  window.open("https://github.com/json-schema-tools/playground")
+                }>
+                <CodeIcon />
+              </IconButton>
+            </Tooltip>
             <Tooltip title={t("Toggle Dark Mode")}>
               <IconButton onClick={darkMode.toggle}>
                 {darkMode.value ? <Brightness3Icon /> : <WbSunnyIcon />}
