@@ -1,3 +1,16 @@
+# 1.0.0 (2020-02-25)
+
+
+### Bug Fixes
+
+* **README:** add initial README ([cc1a8ce](https://github.com/json-schema-tools/playground/commit/cc1a8ceb6de2b31b5e861e7492ae423b471f06d9))
+* linting ([5005a34](https://github.com/json-schema-tools/playground/commit/5005a34f812b8b17782c9bcc165472813f889ec2))
+
+
+### Features
+
+* initial commit ([5d4b87f](https://github.com/json-schema-tools/playground/commit/5d4b87f36e4bcdc510d55e98d2a6c3cd49fa02e7))
+
 ## [1.0.1](https://github.com/etclabscore/pristine-typescript-react-material-ui-monaco-playground/compare/1.0.0...1.0.1) (2019-11-27)
 
 
