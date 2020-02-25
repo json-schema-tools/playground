@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/json-schema-tools/playground/compare/1.0.0...1.0.1) (2020-02-25)
+
+
+### Bug Fixes
+
+* add CNAME ([2eb1c48](https://github.com/json-schema-tools/playground/commit/2eb1c486d30fe9a3442b0bb960d363eada2c9a91))
+* toggle editor theme + add gif ([0eec7ba](https://github.com/json-schema-tools/playground/commit/0eec7ba1464a41af626732a5a375de716db1e5bc))
+
 # 1.0.0 (2020-02-25)
 
 
