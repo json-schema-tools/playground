@@ -1,3 +1,14 @@
+## [1.0.4](https://github.com/json-schema-tools/playground/compare/1.0.3...1.0.4) (2020-02-25)
+
+
+### Bug Fixes
+
+* **README:** description + add github code button ([d97e046](https://github.com/json-schema-tools/playground/commit/d97e0463984c8dbc1fb02a190e2ce73449458e97))
+* **README:** make json-schema.tools link ([9cdd89d](https://github.com/json-schema-tools/playground/commit/9cdd89dfdd90c229a5c5b97dd04aae8dfbceb8a2))
+* **README:** tool => tools ([d93676e](https://github.com/json-schema-tools/playground/commit/d93676e02b39690728698c021e286758237e7b74))
+* **README:** update description ([e1a7f5a](https://github.com/json-schema-tools/playground/commit/e1a7f5aaf07520a6eea08eb27fce01974d36c459))
+* typo ([9bd98de](https://github.com/json-schema-tools/playground/commit/9bd98de3bc8b0eea62b2993a7ce433319f75b201))
+
 ## [1.0.3](https://github.com/json-schema-tools/playground/compare/1.0.2...1.0.3) (2020-02-25)
 
 
