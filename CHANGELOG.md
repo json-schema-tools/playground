@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/json-schema-tools/playground/compare/1.0.2...1.0.3) (2020-02-25)
+
+
+### Bug Fixes
+
+* whitespace in defaultValue ([ec10186](https://github.com/json-schema-tools/playground/commit/ec101865a2e88064e1fe6260db2bd56fee66468e))
+
 ## [1.0.2](https://github.com/json-schema-tools/playground/compare/1.0.1...1.0.2) (2020-02-25)
 
 
