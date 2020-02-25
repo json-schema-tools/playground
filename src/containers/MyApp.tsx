@@ -18,7 +18,7 @@ const languages: SupportedLanguages[] = ["typescript", "golang", "python", "rust
 const MyApp: React.FC = () => {
   const darkMode = useDarkMode();
   const [, setIsEditorReady] = useState(false);
-  const [defaultValue] = useState(`{\n  "title": "foo",\n  "type": "string" \n}`);
+  const [defaultValue] = useState(`{\n  "title": "foo",\n  "type": "string"\n}`);
   const [value, setValue] = useState(defaultValue);
   const [results, setResults] = useState("");
   const [languageAnchorEl, setLanguageAnchorEl] = React.useState<null | HTMLElement>(null);
