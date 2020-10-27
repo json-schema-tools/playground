@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/json-schema-tools/playground/compare/1.0.4...1.1.0) (2020-10-27)
+
+
+### Bug Fixes
+
+* update readme ([f064cf9](https://github.com/json-schema-tools/playground/commit/f064cf98c764e41ea30f1c853078aeade559e961))
+
+
+### Features
+
+* switch to transpiler ([6efb220](https://github.com/json-schema-tools/playground/commit/6efb220219a1d95c1aba9da5180e06b0bd64111f))
+
 ## [1.0.4](https://github.com/json-schema-tools/playground/compare/1.0.3...1.0.4) (2020-02-25)
 
 
