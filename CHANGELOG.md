@@ -1,3 +1,13 @@
+## [1.1.1](https://github.com/json-schema-tools/playground/compare/1.1.0...1.1.1) (2020-10-27)
+
+
+### Bug Fixes
+
+* add dereferencing and a ref to the example ([bef7782](https://github.com/json-schema-tools/playground/commit/bef7782284df98c60ef02d344fbf794130d360cd))
+* make link to to root org ([a9cb349](https://github.com/json-schema-tools/playground/commit/a9cb349069a92f1741f2e4513e276ce2e59d225b))
+* update example ([6fce070](https://github.com/json-schema-tools/playground/commit/6fce0701b26ea618cc1c3bb459f9285942907ead))
+* use context for release ([6a5a6cb](https://github.com/json-schema-tools/playground/commit/6a5a6cba0356873e6700ea466dfc75d40b992cc0))
+
 # [1.1.0](https://github.com/json-schema-tools/playground/compare/1.0.4...1.1.0) (2020-10-27)
 
 
