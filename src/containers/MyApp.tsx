@@ -16,10 +16,32 @@ import { addDiagnostics } from "@etclabscore/monaco-add-json-schema-diagnostics"
 
 const languages: SupportedLanguages[] = ["typescript", "golang", "python", "rust"];
 
+const defaultSchema = {
+  title: "example",
+  type: "object",
+  required: ["thing"],
+  properties: {
+    thing: {
+      title: "bar",
+      description: "This is a bar thing",
+      type: "string",
+      enum: [ "one", "two", "three" ]
+    },
+    otherThing: {
+      description: "generated Title when there is none",
+      type: "array",
+      items: {
+        title: "foo",
+        type: "number"
+      }
+    }
+  }
+};
+
 const MyApp: React.FC = () => {
   const darkMode = useDarkMode();
   const [, setIsEditorReady] = useState(false);
-  const [defaultValue] = useState(`{\n  "title": "foo",\n  "type": "string"\n}`);
+  const [defaultValue] = useState(JSON.stringify(defaultSchema, undefined, "  "));
   const [value, setValue] = useState(defaultValue);
   const [results, setResults] = useState("");
   const [languageAnchorEl, setLanguageAnchorEl] = React.useState<null | HTMLElement>(null);
