@@ -9,7 +9,7 @@ import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import { lightTheme, darkTheme } from "../themes/theme";
 import { useTranslation } from "react-i18next";
 import SplitPane from "react-split-pane";
-import JsonSchemaToTypes, { SupportedLanguages } from "@etclabscore/json-schema-to-types";
+import Transpiler, { SupportedLanguages } from "@json-schema-tools/transpiler";
 import "./MyApp.css";
 import Editor from "@etclabscore/react-monaco-editor";
 import { addDiagnostics } from "@etclabscore/monaco-add-json-schema-diagnostics";
@@ -33,7 +33,7 @@ const MyApp: React.FC = () => {
   function handleTranspile() {
     try {
       const result = JSON.parse(value);
-      const tr = new JsonSchemaToTypes(result);
+      const tr = new Transpiler(result);
       setResults(tr.to(selectedLanguage));
     } catch (e) {
       console.error(e);
