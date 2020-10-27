@@ -133,7 +133,7 @@ const MyApp: React.FC = () => {
             <Tooltip title={t("json-schema.tools Github")}>
               <IconButton
                 onClick={() =>
-                  window.open("https://github.com/json-schema-tools/playground")
+                  window.open("https://github.com/json-schema-tools/")
                 }>
                 <CodeIcon />
               </IconButton>
