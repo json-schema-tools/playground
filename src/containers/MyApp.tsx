@@ -10,6 +10,7 @@ import { lightTheme, darkTheme } from "../themes/theme";
 import { useTranslation } from "react-i18next";
 import SplitPane from "react-split-pane";
 import Transpiler, { SupportedLanguages } from "@json-schema-tools/transpiler";
+import Dereferencer from "@json-schema-tools/dereferencer";
 import "./MyApp.css";
 import Editor from "@etclabscore/react-monaco-editor";
 import { addDiagnostics } from "@etclabscore/monaco-add-json-schema-diagnostics";
@@ -34,7 +35,13 @@ const defaultSchema = {
         title: "foo",
         type: "number"
       }
+    },
+    baz: {
+      "$ref": "#/definitions/baz"
     }
+  },
+  definitions: {
+    baz: { type: "number", title: "baz" }
   }
 };
 
@@ -55,8 +62,11 @@ const MyApp: React.FC = () => {
   function handleTranspile() {
     try {
       const result = JSON.parse(value);
-      const tr = new Transpiler(result);
-      setResults(tr.to(selectedLanguage));
+      const dereffer = new Dereferencer(result);
+      dereffer.resolve().then((schema) => {
+        const tr = new Transpiler(schema);
+        setResults(tr.to(selectedLanguage));
+      });
     } catch (e) {
       console.error(e);
     }
@@ -100,9 +110,9 @@ const MyApp: React.FC = () => {
       <AppBar position="static" color="default" elevation={0}>
         <Toolbar>
           <Grid container alignContent="center" alignItems="center" justify="flex-start">
-            <Typography variant="h6" style={{ paddingRight: "20px" }}>{t("json-schema.tools")}</Typography>
+            <Typography variant="h6" style={{ paddingRight: "20px" }}>{t("json-schema.tools") as string}</Typography>
             <Typography variant="caption" style={{ paddingRight: "5px" }}>
-              {t("playground")}
+              {t("playground") as string}
             </Typography>
           </Grid>
           <Grid container alignContent="center" alignItems="center" justify="flex-end">
@@ -130,7 +140,7 @@ const MyApp: React.FC = () => {
               </Menu>
             </>
             }
-            <Tooltip title={t("json-schema.tools Github")}>
+            <Tooltip title={t("json-schema.tools Github") as string}>
               <IconButton
                 onClick={() =>
                   window.open("https://github.com/json-schema-tools/")
@@ -138,7 +148,7 @@ const MyApp: React.FC = () => {
                 <CodeIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title={t("Toggle Dark Mode")}>
+            <Tooltip title={t("Toggle Dark Mode") as string}>
               <IconButton onClick={darkMode.toggle}>
                 {darkMode.value ? <Brightness3Icon /> : <WbSunnyIcon />}
               </IconButton>
