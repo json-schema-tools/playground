@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/json-schema-tools/playground/compare/1.1.1...1.1.2) (2020-10-28)
+
+
+### Bug Fixes
+
+* update dereffer again ([1609490](https://github.com/json-schema-tools/playground/commit/1609490b70f1e03f8df61ae95b8a2356cd9ddac8))
+
 ## [1.1.1](https://github.com/json-schema-tools/playground/compare/1.1.0...1.1.1) (2020-10-27)
 
 
