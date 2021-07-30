@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/json-schema-tools/playground/compare/1.1.3...1.1.4) (2021-07-30)
+
+
+### Bug Fixes
+
+* update transpiler to latest with type array fixes ([1dda1aa](https://github.com/json-schema-tools/playground/commit/1dda1aaffa1fdeb3905adf0795561ecad29feb6d))
+
 ## [1.1.3](https://github.com/json-schema-tools/playground/compare/1.1.2...1.1.3) (2021-07-30)
 
 
