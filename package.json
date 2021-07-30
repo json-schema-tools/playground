@@ -38,8 +38,8 @@
   "dependencies": {
     "@etclabscore/monaco-add-json-schema-diagnostics": "^1.0.3",
     "@etclabscore/react-monaco-editor": "^1.0.3",
-    "@json-schema-tools/dereferencer": "^1.2.14",
-    "@json-schema-tools/transpiler": "^1.5.4",
+    "@json-schema-tools/dereferencer": "^1.5.3",
+    "@json-schema-tools/transpiler": "^1.10.1",
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
     "i18next": "^17.3.0",
