@@ -1,3 +1,12 @@
+## [1.1.5](https://github.com/json-schema-tools/playground/compare/1.1.4...1.1.5) (2022-10-26)
+
+
+### Bug Fixes
+
+* bump node ([b03eaef](https://github.com/json-schema-tools/playground/commit/b03eaef9fb0f9338a5f8febfb487345e6a1a4318))
+* force npm install more ([05b10aa](https://github.com/json-schema-tools/playground/commit/05b10aa70c9942e38003b5beaadd254c6626a0b2))
+* gotta force install ([4025e94](https://github.com/json-schema-tools/playground/commit/4025e944a68f66cf221a1b193f48f06be3f74565))
+
 ## [1.1.4](https://github.com/json-schema-tools/playground/compare/1.1.3...1.1.4) (2021-07-30)
 
 
