@@ -33,10 +33,8 @@ jobs:
     steps:
       - checkout
       - restore_cache: *restore-deps-cache
-      - run: npm install
-      - run: npm install codecov
+      - run: npm install --force
       - run: npm test
-      - run: ./node_modules/.bin/codecov
       - save_cache: *save-deps-cache
 
   build:
@@ -44,7 +42,7 @@ jobs:
     steps:
       - checkout
       - restore_cache: *restore-deps-cache
-      - run: npm install
+      - run: npm install --force
       - run: npm run build
       - save_cache: *save-deps-cache
 
@@ -53,7 +51,7 @@ jobs:
     steps:
       - checkout
       - restore_cache: *restore-deps-cache
-      - run: npm install
+      - run: npm install --force
       - run: npm run build
       - run: npm install semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github @semantic-release/npm @semantic-release/commit-analyzer @semantic-release/release-notes-generator @qiwi/semantic-release-gh-pages-plugin
       - run: git checkout .
