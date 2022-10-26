@@ -12,7 +12,7 @@
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@rescripts/cli": "0.0.13",
+    "@rescripts/cli": "0.0.16",
     "@rescripts/utilities": "0.0.6",
     "@types/jest": "^26.0.4",
     "@types/react-dom": "^16.9.8",
