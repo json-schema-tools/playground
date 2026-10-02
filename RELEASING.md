@@ -21,3 +21,7 @@ CircleCI required checks with the Actions test matrix while preserving other
 branch protections. Keep the existing custom domain. The built-in GitHub token
 provides deployment access; no manually managed token or secret is required.
 Disable the legacy CircleCI project after merging.
+
+## Shared workflows
+
+CI and release execution is maintained in [foundation](https://github.com/json-schema-tools/foundation). Entry points pin a reviewed foundation commit; update both workflow pins together to adopt changes. Package scripts, coverage baselines and release-please metadata stay here. Trusted publishing continues to use this repository’s `release.yml` and `release` environment.
