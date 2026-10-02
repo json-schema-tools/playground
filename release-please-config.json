@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "bootstrap-sha": "416f12f3fc88063660237347e9f588af50117d7a",
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "@json-schema-tools/playground",
+      "changelog-path": "CHANGELOG.md",
+      "include-component-in-tag": false,
+      "include-v-in-tag": false
+    }
+  }
+}
