@@ -8,7 +8,6 @@ jobs:
       lint-command: npm run lint
       build-command: npm run build
       test-command: npm test -- --runInBand
-      node-options: --openssl-legacy-provider
   commitlint:
     uses: json-schema-tools/foundation/.github/workflows/commitlint.yml@b9a036e0b64a3fd9982d0eab904f5cb1227625df # v1.0.0
     permissions:

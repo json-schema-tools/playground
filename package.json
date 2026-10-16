@@ -4,26 +4,27 @@
   "description": "Playground for JSON Schema Tools",
   "main": "build/index.js",
   "scripts": {
-    "start": "rescripts start",
-    "build": "rescripts build",
+    "start": "vite",
+    "build": "vite build",
     "lint": "tslint -p .",
     "test": "jest --coverage --runInBand --passWithNoTests",
     "coverage:bump": "jest-it-up"
   },
   "author": "",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "devDependencies": {
-    "@rescripts/cli": "0.0.13",
-    "@rescripts/utilities": "0.0.6",
     "@types/jest": "^26.0.4",
     "@types/react-dom": "^16.9.8",
+    "@vitejs/plugin-react": "^6.1.2",
     "jest": "24.9.0",
-    "monaco-editor-webpack-plugin": "1.7.0",
-    "react-scripts": "^3.4.0",
+    "jest-it-up": "^4.0.1",
     "ts-jest": "^24.0.2",
-    "tslint": "^6.1.2",
+    "tslint": "^6.1.3",
     "typescript": "^3.9.6",
-    "jest-it-up": "^4.0.1"
+    "vite": "^8.3.4"
   },
   "browserslist": {
     "production": [
@@ -42,8 +43,8 @@
     "@etclabscore/react-monaco-editor": "^1.0.3",
     "@json-schema-tools/dereferencer": "^1.5.7",
     "@json-schema-tools/transpiler": "^1.10.2",
-    "@material-ui/core": "^4.5.1",
-    "@material-ui/icons": "^4.5.1",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "i18next": "^17.3.0",
     "i18next-browser-languagedetector": "^4.0.0",
     "moment": "^2.30.1",
@@ -53,8 +54,5 @@
     "react-i18next": "^10.13.1",
     "react-split-pane": "^0.1.87",
     "use-dark-mode": "^2.3.1"
-  },
-  "rescripts": [
-    "rescript-monaco"
-  ]
+  }
 }

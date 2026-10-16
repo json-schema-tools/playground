@@ -1,9 +1,10 @@
 # Releasing
 
 GitHub Actions installs the locked dependencies, runs lint and Jest, and builds
-the playground on Node 20 and 22. This legacy webpack build needs
-`NODE_OPTIONS=--openssl-legacy-provider`; `.npmrc` preserves its existing peer
-dependency compatibility. Neither setting grants deployment credentials.
+the playground on Node 20 and 22. Vite writes the production bundle to `build/`
+for GitHub Pages. Local development uses the Node version in `.node-version`.
+`.npmrc` keeps the existing peer-dependency compatibility. It does not grant
+deployment credentials.
 
 The repository currently has no tests. Jest retains `--passWithNoTests` and
 initial zero coverage thresholds rather than inventing a coverage baseline.
