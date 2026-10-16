@@ -89,6 +89,10 @@ const MyApp: React.FC = () => {
     const modelUri = monaco.Uri.parse(modelUriString);
     const model = monaco.editor.createModel(value || "", "json", modelUri);
     editor.setModel(model);
+    // The editor wrapper ignores undo and redo, so listen here and keep the schema in sync.
+    editor.onDidChangeModelContent(() => {
+      setValue(editor.getValue());
+    });
     const schema = await fetch("https://json-schema.org/draft-07/schema").then((data) => data.json());
     addDiagnostics(modelUri.toString(), schema, monaco);
   };
@@ -188,9 +192,6 @@ const MyApp: React.FC = () => {
         <Editor
           height="90vh"
           value={defaultValue}
-          onChange={(ev: any, v: string) => {
-            setValue(v);
-          }}
           editorDidMount={handleEditorDidMount}
           language="json"
         />
