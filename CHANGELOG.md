@@ -7,6 +7,13 @@
 * force npm install more ([05b10aa](https://github.com/json-schema-tools/playground/commit/05b10aa70c9942e38003b5beaadd254c6626a0b2))
 * gotta force install ([4025e94](https://github.com/json-schema-tools/playground/commit/4025e944a68f66cf221a1b193f48f06be3f74565))
 
+## [1.1.6](https://github.com/json-schema-tools/playground/compare/1.1.5...1.1.6) (2026-10-16)
+
+
+### Bug Fixes
+
+* show schema transpile errors in the output pane ([#206](https://github.com/json-schema-tools/playground/issues/206)) ([28f6be5](https://github.com/json-schema-tools/playground/commit/28f6be5a496b7fa9dafe2585c4d760c64926213f))
+
 ## [1.1.4](https://github.com/json-schema-tools/playground/compare/1.1.3...1.1.4) (2021-07-30)
 
 
