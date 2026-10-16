@@ -1,6 +1,6 @@
 {
   "name": "@json-schema-tools/playground",
-  "version": "0.0.0-development",
+  "version": "1.1.6",
   "description": "Playground for JSON Schema Tools",
   "main": "build/index.js",
   "scripts": {
