@@ -59,17 +59,14 @@ const MyApp: React.FC = () => {
     monaco.editor.setTheme(th);
   }, [darkMode.value]);
 
-  function handleTranspile() {
-    try {
-      const result = JSON.parse(value);
-      const dereffer = new Dereferencer(result);
-      dereffer.resolve().then((schema) => {
-        const tr = new Transpiler(schema);
-        setResults(tr.to(selectedLanguage));
-      });
-    } catch (e) {
-      console.error(e);
+  function errorMessage(error: unknown): string {
+    let detail = String(error);
+    if (error instanceof Error) {
+      detail = error.message;
+    } else if (typeof error === "object" && error !== null && typeof (error as any).message === "string") {
+      detail = (error as any).message;
     }
+    return "Unable to transpile schema.\n\n" + detail;
   }
 
   const { t } = useTranslation();
@@ -92,6 +89,10 @@ const MyApp: React.FC = () => {
     const modelUri = monaco.Uri.parse(modelUriString);
     const model = monaco.editor.createModel(value || "", "json", modelUri);
     editor.setModel(model);
+    // The editor wrapper ignores undo and redo, so listen here and keep the schema in sync.
+    editor.onDidChangeModelContent(() => {
+      setValue(editor.getValue());
+    });
     const schema = await fetch("https://json-schema.org/draft-07/schema").then((data) => data.json());
     addDiagnostics(modelUri.toString(), schema, monaco);
   };
@@ -101,8 +102,38 @@ const MyApp: React.FC = () => {
   };
 
   useEffect(() => {
-    handleTranspile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    let cancelled = false;
+
+    function showError(error: unknown) {
+      if (!cancelled) {
+        setResults(errorMessage(error));
+      }
+    }
+
+    let parsed: any;
+    try {
+      parsed = JSON.parse(value);
+    } catch (error) {
+      showError(error);
+      return;
+    }
+
+    const dereffer = new Dereferencer(parsed);
+    dereffer.resolve().then((schema) => {
+      if (cancelled) {
+        return;
+      }
+      try {
+        const tr = new Transpiler(schema);
+        setResults(tr.to(selectedLanguage));
+      } catch (error) {
+        showError(error);
+      }
+    }).catch(showError);
+
+    return () => {
+      cancelled = true;
+    };
   }, [value, selectedLanguage]);
 
   return (
@@ -161,9 +192,6 @@ const MyApp: React.FC = () => {
         <Editor
           height="90vh"
           value={defaultValue}
-          onChange={(ev: any, v: string) => {
-            setValue(v);
-          }}
           editorDidMount={handleEditorDidMount}
           language="json"
         />
