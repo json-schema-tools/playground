@@ -19,7 +19,6 @@ jobs:
     with:
       build-command: npm run build
       test-command: npm test -- --runInBand
-      node-options: --openssl-legacy-provider
       pages-path: ./build
       publish-npm: false
 'on':
