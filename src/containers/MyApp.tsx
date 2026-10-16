@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MuiThemeProvider, AppBar, Toolbar, Typography, IconButton, Tooltip, CssBaseline, Grid, Menu, Button, MenuItem } from "@material-ui/core"; //tslint:disable-line
 import useDarkMode from "use-dark-mode";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
@@ -14,6 +14,7 @@ import Dereferencer from "@json-schema-tools/dereferencer";
 import "./MyApp.css";
 import Editor from "@etclabscore/react-monaco-editor";
 import { addDiagnostics } from "@etclabscore/monaco-add-json-schema-diagnostics";
+import { dereferenceForDisplay, hasCyclicRefs } from "../dereferenceForDisplay";
 
 const languages: SupportedLanguages[] = ["typescript", "golang", "python", "rust"];
 
@@ -48,6 +49,9 @@ const defaultSchema = {
 const MyApp: React.FC = () => {
   const darkMode = useDarkMode();
   const [, setIsEditorReady] = useState(false);
+  const [dereferencing, setDereferencing] = useState(false);
+  const schemaEditorRef = useRef<any>(null);
+  const derefDecorations = useRef<string[]>([]);
   const [defaultValue] = useState(JSON.stringify(defaultSchema, undefined, "  "));
   const [value, setValue] = useState(defaultValue);
   const [results, setResults] = useState("");
@@ -59,14 +63,14 @@ const MyApp: React.FC = () => {
     monaco.editor.setTheme(th);
   }, [darkMode.value]);
 
-  function errorMessage(error: unknown): string {
+  function errorMessage(error: unknown, lead = "Unable to transpile schema."): string {
     let detail = String(error);
     if (error instanceof Error) {
       detail = error.message;
     } else if (typeof error === "object" && error !== null && typeof (error as any).message === "string") {
       detail = (error as any).message;
     }
-    return "Unable to transpile schema.\n\n" + detail;
+    return lead + "\n\n" + detail;
   }
 
   const { t } = useTranslation();
@@ -83,8 +87,57 @@ const MyApp: React.FC = () => {
     setLanguageAnchorEl(null);
   };
 
+  function refreshDerefDecorations(editor: any) {
+    const model = editor.getModel();
+    if (!model) {
+      return;
+    }
+    const provenance = model.findMatches("x-dereferenced-from", false, false, true, null, false);
+    const cycles = model.findMatches("x-cycle", false, false, true, null, false);
+    const marks = provenance.map((match: any) => ({
+      range: match.range,
+      options: { inlineClassName: "deref-from" },
+    })).concat(cycles.map((match: any) => ({
+      range: match.range,
+      options: { inlineClassName: "deref-cycle" },
+    })));
+    derefDecorations.current = editor.deltaDecorations(derefDecorations.current, marks);
+  }
+
+  async function handleDereference() {
+    const editor = schemaEditorRef.current;
+    if (!editor || dereferencing) {
+      return;
+    }
+    const source = editor.getValue();
+    let parsed: any;
+    try {
+      parsed = JSON.parse(source);
+    } catch (error) {
+      setResults(errorMessage(error, "Unable to dereference schema."));
+      return;
+    }
+    setDereferencing(true);
+    try {
+      const text = await dereferenceForDisplay(parsed);
+      if (!schemaEditorRef.current || schemaEditorRef.current.getValue() !== source) {
+        return;
+      }
+      const model = schemaEditorRef.current.getModel();
+      model.pushEditOperations([], [{
+        range: model.getFullModelRange(),
+        text,
+      }], () => null);
+    } catch (error) {
+      setResults(errorMessage(error, "Unable to dereference schema."));
+    } finally {
+      setDereferencing(false);
+    }
+  }
+
   const handleEditorDidMount = async (_: any, editor: any) => {
     setIsEditorReady(true);
+    schemaEditorRef.current = editor;
     const modelUriString = "inmemory://json-schema-tools-playground.json";
     const modelUri = monaco.Uri.parse(modelUriString);
     const model = monaco.editor.createModel(value || "", "json", modelUri);
@@ -92,6 +145,7 @@ const MyApp: React.FC = () => {
     // The editor wrapper ignores undo and redo, so listen here and keep the schema in sync.
     editor.onDidChangeModelContent(() => {
       setValue(editor.getValue());
+      refreshDerefDecorations(editor);
     });
     const schema = await fetch("https://json-schema.org/draft-07/schema").then((data) => data.json());
     addDiagnostics(modelUri.toString(), schema, monaco);
@@ -115,6 +169,13 @@ const MyApp: React.FC = () => {
       parsed = JSON.parse(value);
     } catch (error) {
       showError(error);
+      return;
+    }
+
+    if (hasCyclicRefs(parsed)) {
+      showError(new Error(
+        "This schema contains a circular $ref. Dereference shows that cycle as a link. Transpiling a cycle is not supported.",
+      ));
       return;
     }
 
@@ -148,6 +209,14 @@ const MyApp: React.FC = () => {
           </Grid>
           <Grid container alignContent="center" alignItems="center" justify="flex-end">
             {<>
+              <Tooltip title="Inline $refs. Shared copies become links, and cycles are marked instead of expanded.">
+                <Button
+                  style={{ marginRight: "10px" }}
+                  variant="outlined"
+                  onClick={handleDereference}
+                  disabled={dereferencing}
+                >{dereferencing ? "Dereferencing..." : "Dereference"}</Button>
+              </Tooltip>
               <Tooltip title={"Language"} >
                 <>
                   <Typography variant="body1" style={{ paddingRight: "10px" }}>Language:</Typography>

@@ -81,3 +81,13 @@ cursor: not-allowed;
 .Resizer.disabled:hover {
 border-color: transparent;
 }
+
+.monaco-editor .deref-from {
+  color: #8ab4f8;
+  font-weight: 600;
+}
+
+.monaco-editor .deref-cycle {
+  color: #e06c75;
+  font-weight: 600;
+}
