@@ -15,6 +15,8 @@ import "./MyApp.css";
 import Editor from "@etclabscore/react-monaco-editor";
 import { addDiagnostics } from "@etclabscore/monaco-add-json-schema-diagnostics";
 import { dereferenceForDisplay, hasCyclicRefs } from "../dereferenceForDisplay";
+import { referenceForDisplay } from "../referenceForDisplay";
+import { titleizeForDisplay } from "../titleizeForDisplay";
 
 const languages: SupportedLanguages[] = ["typescript", "golang", "python", "rust"];
 
@@ -50,6 +52,8 @@ const MyApp: React.FC = () => {
   const darkMode = useDarkMode();
   const [, setIsEditorReady] = useState(false);
   const [dereferencing, setDereferencing] = useState(false);
+  const [titleizing, setTitleizing] = useState(false);
+  const [referencing, setReferencing] = useState(false);
   const schemaEditorRef = useRef<any>(null);
   const derefDecorations = useRef<string[]>([]);
   const [defaultValue] = useState(JSON.stringify(defaultSchema, undefined, "  "));
@@ -135,6 +139,68 @@ const MyApp: React.FC = () => {
     }
   }
 
+  async function handleTitleize() {
+    const editor = schemaEditorRef.current;
+    if (!editor || titleizing) {
+      return;
+    }
+    const source = editor.getValue();
+    let parsed: any;
+    try {
+      parsed = JSON.parse(source);
+    } catch (error) {
+      setResults(errorMessage(error, "Unable to titleize schema."));
+      return;
+    }
+    setTitleizing(true);
+    try {
+      const text = await titleizeForDisplay(parsed);
+      if (!schemaEditorRef.current || schemaEditorRef.current.getValue() !== source) {
+        return;
+      }
+      const model = schemaEditorRef.current.getModel();
+      model.pushEditOperations([], [{
+        range: model.getFullModelRange(),
+        text,
+      }], () => null);
+    } catch (error) {
+      setResults(errorMessage(error, "Unable to titleize schema."));
+    } finally {
+      setTitleizing(false);
+    }
+  }
+
+  async function handleReference() {
+    const editor = schemaEditorRef.current;
+    if (!editor || referencing) {
+      return;
+    }
+    const source = editor.getValue();
+    let parsed: any;
+    try {
+      parsed = JSON.parse(source);
+    } catch (error) {
+      setResults(errorMessage(error, "Unable to reference schema."));
+      return;
+    }
+    setReferencing(true);
+    try {
+      const text = referenceForDisplay(parsed);
+      if (!schemaEditorRef.current || schemaEditorRef.current.getValue() !== source) {
+        return;
+      }
+      const model = schemaEditorRef.current.getModel();
+      model.pushEditOperations([], [{
+        range: model.getFullModelRange(),
+        text,
+      }], () => null);
+    } catch (error) {
+      setResults(errorMessage(error, "Unable to reference schema."));
+    } finally {
+      setReferencing(false);
+    }
+  }
+
   const handleEditorDidMount = async (_: any, editor: any) => {
     setIsEditorReady(true);
     schemaEditorRef.current = editor;
@@ -216,6 +282,22 @@ const MyApp: React.FC = () => {
                   onClick={handleDereference}
                   disabled={dereferencing}
                 >{dereferencing ? "Dereferencing..." : "Dereference"}</Button>
+              </Tooltip>
+              <Tooltip title="Dereference, then generate deterministic titles for the schema and its subschemas.">
+                <Button
+                  style={{ marginRight: "10px" }}
+                  variant="outlined"
+                  onClick={handleTitleize}
+                  disabled={titleizing}
+                >{titleizing ? "Titleizing..." : "Titleize"}</Button>
+              </Tooltip>
+              <Tooltip title="Extract subschemas into definitions as $refs.">
+                <Button
+                  style={{ marginRight: "10px" }}
+                  variant="outlined"
+                  onClick={handleReference}
+                  disabled={referencing}
+                >{referencing ? "Referencing..." : "Reference"}</Button>
               </Tooltip>
               <Tooltip title={"Language"} >
                 <>
