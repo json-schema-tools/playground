@@ -42,7 +42,7 @@
     "@etclabscore/monaco-add-json-schema-diagnostics": "^1.0.3",
     "@etclabscore/react-monaco-editor": "^1.0.3",
     "@json-schema-tools/dereferencer": "^1.5.7",
-    "@json-schema-tools/transpiler": "^1.10.2",
+    "@json-schema-tools/transpiler": "^1.10.5",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "i18next": "^17.3.0",
